@@ -100,3 +100,59 @@ System memory in use after: 259.3 MB.
 Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3798.
 Total: 5.312100 ms (FindLiveObjects: 0.733000 ms CreateObjectMapping: 0.396800 ms MarkObjects: 4.039300 ms  DeleteObjects: 0.140200 ms)
 
+========================================================================
+Received Import Request.
+  Time since last request: 14247.984065 seconds.
+  path: Assets/Scripts
+  artifactKey: Guid(1bd39c99ad930d340aa285879b30c1c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts using Guid(1bd39c99ad930d340aa285879b30c1c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b6d962b9581263449f5f26087a2f44c') in 0.027010 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004201 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.60 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.190 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.73 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3342 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 259.3 MB.
+System memory in use after: 259.4 MB.
+
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3802.
+Total: 3.900900 ms (FindLiveObjects: 0.417100 ms CreateObjectMapping: 0.242600 ms MarkObjects: 3.070200 ms  DeleteObjects: 0.169600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004184 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.261 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.51 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3342 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 259.4 MB.
+System memory in use after: 259.5 MB.
+
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3805.
+Total: 6.601900 ms (FindLiveObjects: 0.483800 ms CreateObjectMapping: 0.286800 ms MarkObjects: 5.641700 ms  DeleteObjects: 0.187400 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 545.012331 seconds.
+  path: Assets/Scripts/ScriptCam.cs
+  artifactKey: Guid(3d2e670fef7debb439ef6076cac21f51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ScriptCam.cs using Guid(3d2e670fef7debb439ef6076cac21f51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b77257f20f67fe2c617ea1f36209a8b') in 0.015624 seconds 
