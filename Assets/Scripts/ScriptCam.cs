@@ -16,7 +16,7 @@ public class ScriptCam : MonoBehaviour
  
     void Start()
     {
-        offset = transform.position - playerTrans.position;
+        offset = new Vector3(0, 0, -10);
     }
  
     void LateUpdate()

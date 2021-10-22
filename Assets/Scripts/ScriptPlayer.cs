@@ -12,8 +12,13 @@ public class ScriptPlayer : MonoBehaviour
     private Rigidbody2D rig;
     private ContactPoint2D[] contactPoints = new ContactPoint2D[10];
     private Vector2 mouseBegin = Vector2.zero;
-    private Vector2 mouseEnd = Vector2.zero;
+    //private Vector2 mouseEnd = Vector2.zero;
+    private Vector2 vecFinal;
     private bool isAiming = false;
+    private float aimTime = 0.0f;
+
+    private float offsetAngle = 0f;
+    private float offsetAngleSub = 0f;
 
     #region Public Fields
     public Camera curCam;
@@ -22,12 +27,16 @@ public class ScriptPlayer : MonoBehaviour
     public float lengthConstant = 20.0f;
     public float strengthConstant = 0.5f;
     public float rateConstant = 1.0f;
+    public float angleConstant = 1.0f;
     [Range(0f, 1f)] public float onGroundMin = 0.7f;
     [Range(0f, 1f)] public float moveDamp = 0.3f;
     [Range(0f, 1f)] public float collisionDamp = 0.8f;
     [Range(0f, 1f)] public float rollDamp = 0.9f;
     public float velocityMin = 0.1f;
     public float bufferTime = 2.0f;
+    public float aimUnstableTime = 1.0f;
+    public float aimUnstableMultiplier = 5.0f;
+    public float minAimShake = 0.1f;
     #endregion
 
     #region Unity Methods
@@ -41,20 +50,18 @@ public class ScriptPlayer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Reset();
+
+            aimTime = 0.0f;
+
             mouseBegin = Input.mousePosition;
             isAiming = true;
 
-            timer = 0.0f;
-
-            Color aimerColor = Aimer.GetComponent<SpriteRenderer>().color;
-            aimerColor.a = 1f;
-            Aimer.GetComponent<SpriteRenderer>().color = aimerColor;
         } 
         if (Input.GetMouseButtonUp (0))
         {
-            mouseEnd = Input.mousePosition;
-            AddQueue(curCam.ScreenToWorldPoint(mouseEnd),
-                curCam.ScreenToWorldPoint(mouseBegin));
+            //mouseEnd = Input.mousePosition;
+            AddQueue(vecFinal);
             isAiming = false;
         }
 
@@ -67,19 +74,39 @@ public class ScriptPlayer : MonoBehaviour
             Vector2 mouseCur = Input.mousePosition;
             Vector3 vecDif = curCam.ScreenToWorldPoint(mouseBegin)
                 - curCam.ScreenToWorldPoint(mouseCur);
-            float rot = Mathf.Atan2(vecDif.y, vecDif.x) * I80OverPI;
-            rot = vecDif.y > 0 ? rot : rot + 180;
+            float rot = vecDif.x == 0 ? 90 : Mathf.Atan2(vecDif.y, vecDif.x) * I80OverPI;
+            //rot = vecDif.y > 0 ? rot : rot + 180;
+            float limitedMagnitude = Cap01(vecDif.magnitude / curCam.orthographicSize);
 
-            Vector3 processedDif = lengthConstant * vecDif.normalized * Cap01(vecDif.magnitude / curCam.orthographicSize);
+
+            // shaking effect
+            aimTime += Time.deltaTime;
+            float editedMultiplier = aimTime > aimUnstableTime ? 
+                1.0f : (aimUnstableTime - aimTime) * aimUnstableMultiplier + 1.0f;
+
+            float deltaAngle = Time.deltaTime * vecDif.magnitude * rateConstant;
+            offsetAngle += deltaAngle;
+            offsetAngleSub += deltaAngle * (1.0f + limitedMagnitude * 2.7f);
+
+            rot += angleConstant * (vecDif.magnitude / curCam.orthographicSize + minAimShake) * 
+                (Mathf.Sin(offsetAngle) - Mathf.Sin(offsetAngleSub)) * editedMultiplier;
+
+            vecFinal = new Vector2(Mathf.Cos(rot * PIOver180), Mathf.Sin(rot * PIOver180)) * limitedMagnitude;
+
+            // limit strength
+            Vector3 processedDif = lengthConstant * vecFinal;
             Aimer.transform.position = processedDif * 0.5f + transform.position;
             Aimer.transform.rotation = Quaternion.Euler(0f, 0f, rot);
             Aimer.transform.localScale = new Vector3(processedDif.magnitude, 0.5f, 1f);
+
+            // debug
+            //Debug.Log(offsetAngle + ", " + offsetAngleSub);
         }
 
         if (timer > 0.0f)
         {
             Aimer.SetActive(true);
-            Aimer.transform.position = nextAction.Peek() * 0.5f;
+            Aimer.transform.position = nextAction.Peek() * lengthConstant * 0.5f;
             Aimer.transform.position += transform.position;
 
             timer -= Time.deltaTime;
@@ -96,6 +123,17 @@ public class ScriptPlayer : MonoBehaviour
                 Aimer.GetComponent<SpriteRenderer>().color = aimerColor;
             }
         }
+    }
+
+    private void Reset()
+    {
+        offsetAngle = 0f;
+        offsetAngleSub = 0f;
+        timer = 0.0f;
+
+        Color aimerColor = Aimer.GetComponent<SpriteRenderer>().color;
+        aimerColor.a = 1f;
+        Aimer.GetComponent<SpriteRenderer>().color = aimerColor;
     }
 
     void FixedUpdate()
@@ -115,10 +153,8 @@ public class ScriptPlayer : MonoBehaviour
 
     #region Private Methods
 
-    void AddQueue(Vector2 beginning, Vector2 final)
+    void AddQueue(Vector2 vecJump)
     {
-        Vector2 vecJump = final - beginning;
-        vecJump = lengthConstant * vecJump.normalized * Cap01(vecJump.magnitude / curCam.orthographicSize);
         nextAction.Clear();
         nextAction.Enqueue(vecJump);
         timer = bufferTime;
@@ -127,7 +163,7 @@ public class ScriptPlayer : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         rig.velocity *= collisionDamp;
-        CollisionOverlap(collision);
+        //CollisionOverlap(collision);
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -138,16 +174,20 @@ public class ScriptPlayer : MonoBehaviour
     private void CollisionOverlap(Collision2D collision)
     {
         onGround = false;
-        collision.GetContacts(contactPoints);
-        foreach (ContactPoint2D point in contactPoints)
-        {
-            if (point.normal.y > onGroundMin) onGround = true;
-        }
+
+        //collision.GetContacts(contactPoints);
+        //foreach (ContactPoint2D point in contactPoints)
+        //{
+        //    if (point.normal.y > onGroundMin) onGround = true;
+        //}
+
         if (rig.velocity.magnitude < velocityMin)
         {
             ContactPoint2D pt = collision.GetContact(0);
             rig.velocity = Vector2.zero;
             transform.position = pt.point + pt.normal * transform.localScale * 0.49f;
+
+            onGround = true;
         }
     }
 
