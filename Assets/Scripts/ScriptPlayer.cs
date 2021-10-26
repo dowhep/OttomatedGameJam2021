@@ -20,6 +20,13 @@ public class ScriptPlayer : MonoBehaviour
     private float offsetAngle = 0f;
     private float offsetAngleSub = 0f;
 
+    private AudioSource audioAiming;
+    private AudioSource audioCollision;
+    private AudioSource audioShooting;
+
+    private float maxCollisionMagSoundInv;
+
+
     #region Public Fields
     public Camera curCam;
     public GameObject Aimer;
@@ -37,6 +44,11 @@ public class ScriptPlayer : MonoBehaviour
     public float aimUnstableTime = 1.0f;
     public float aimUnstableMultiplier = 5.0f;
     public float minAimShake = 0.1f;
+
+    public float minAimingSound = 0.2f;
+    public float aimingSoundMult = 5f;
+
+    public float maxCollisionMagSound = 30f;
     #endregion
 
     #region Unity Methods
@@ -44,6 +56,10 @@ public class ScriptPlayer : MonoBehaviour
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
+        audioAiming = AudioManager.GetSound("AimingSound").source;
+        audioCollision = AudioManager.GetSound("CollisionSound").source;
+        audioShooting = AudioManager.GetSound("ShootingSound").source;
+        maxCollisionMagSoundInv = (maxCollisionMagSound == 0) ? 0f : 1f / maxCollisionMagSound;
     }
  
     void Update()
@@ -57,12 +73,15 @@ public class ScriptPlayer : MonoBehaviour
             mouseBegin = Input.mousePosition;
             isAiming = true;
 
+            audioAiming.Play();
         } 
         if (Input.GetMouseButtonUp (0))
         {
             //mouseEnd = Input.mousePosition;
             AddQueue(vecFinal);
             isAiming = false;
+
+            audioAiming.Stop();
         }
 
         Aimer.SetActive(false);
@@ -78,6 +97,7 @@ public class ScriptPlayer : MonoBehaviour
             //rot = vecDif.y > 0 ? rot : rot + 180;
             float limitedMagnitude = Cap01(vecDif.magnitude / curCam.orthographicSize);
 
+            audioAiming.pitch = minAimingSound + limitedMagnitude * aimingSoundMult;
 
             // shaking effect
             aimTime += Time.deltaTime;
@@ -88,7 +108,7 @@ public class ScriptPlayer : MonoBehaviour
             offsetAngle += deltaAngle;
             offsetAngleSub += deltaAngle * (1.0f + limitedMagnitude * 2.7f);
 
-            rot += angleConstant * (vecDif.magnitude / curCam.orthographicSize + minAimShake) * 
+            rot += angleConstant * (limitedMagnitude + minAimShake) * 
                 (Mathf.Sin(offsetAngle) - Mathf.Sin(offsetAngleSub)) * editedMultiplier;
 
             vecFinal = new Vector2(Mathf.Cos(rot * PIOver180), Mathf.Sin(rot * PIOver180)) * limitedMagnitude;
@@ -144,7 +164,8 @@ public class ScriptPlayer : MonoBehaviour
             rig.velocity *= moveDamp;
             rig.velocity += jumpVec * strengthConstant;
             timer = 0.0f;
-            Aimer.SetActive(false);     
+            Aimer.SetActive(false);
+            audioShooting.Play();
         }
         onGround = false;
     }
@@ -164,6 +185,9 @@ public class ScriptPlayer : MonoBehaviour
     {
         rig.velocity *= collisionDamp;
         //CollisionOverlap(collision);
+        float magOfCol = (rig.velocity * collision.GetContact(0).normal).magnitude;
+        audioCollision.volume = Cap01(magOfCol / maxCollisionMagSound);
+        audioCollision.Play();
     }
     private void OnCollisionStay2D(Collision2D collision)
     {

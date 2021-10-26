@@ -339,11 +339,18 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
-"Assets/scoringRegionScr.cs"
+"Assets/Scripts/AbstSwitchReactor.cs"
+"Assets/Scripts/AudioManager.cs"
 "Assets/Scripts/BasketScr.cs"
+"Assets/Scripts/scoringRegionScr.cs"
 "Assets/Scripts/ScriptCam.cs"
 "Assets/Scripts/ScriptPlayer.cs"
-"Assets/SlapScr.cs"
+"Assets/Scripts/SlapScr.cs"
+"Assets/Scripts/Sound.cs"
+"Assets/Scripts/SwitchButtonScr.cs"
+"Assets/Scripts/SwitchPlatformScr.cs"
+"Assets/Scripts/UIScr.cs"
+"Assets/Scripts/VolumeControlScr.cs"
 -langversion:8.0
 
 /deterministic

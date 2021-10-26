@@ -59,8 +59,15 @@
     <Compile Include="Assets\Scripts\ScriptCam.cs" />
     <Compile Include="Assets\Scripts\ScriptPlayer.cs" />
     <Compile Include="Assets\Scripts\BasketScr.cs" />
-    <Compile Include="Assets\scoringRegionScr.cs" />
-    <Compile Include="Assets\SlapScr.cs" />
+    <Compile Include="Assets\Scripts\scoringRegionScr.cs" />
+    <Compile Include="Assets\Scripts\SlapScr.cs" />
+    <Compile Include="Assets\Scripts\SwitchPlatformScr.cs" />
+    <Compile Include="Assets\Scripts\AbstSwitchReactor.cs" />
+    <Compile Include="Assets\Scripts\SwitchButtonScr.cs" />
+    <Compile Include="Assets\Scripts\UIScr.cs" />
+    <Compile Include="Assets\Scripts\VolumeControlScr.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\Sound.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
