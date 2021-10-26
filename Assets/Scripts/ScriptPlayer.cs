@@ -66,6 +66,7 @@ public class ScriptPlayer : MonoBehaviour
     {
         if (!UIScr.isUIOpen)
         {
+<<<<<<< HEAD
             if (Input.GetMouseButtonDown(0))
             {
                 Reset();
@@ -74,6 +75,25 @@ public class ScriptPlayer : MonoBehaviour
 
                 mouseBegin = Input.mousePosition;
                 isAiming = true;
+=======
+            Reset();
+
+            aimTime = 0.0f;
+
+            mouseBegin = Input.mousePosition;
+            isAiming = true;
+
+            audioAiming.Play();
+        } 
+        if (Input.GetMouseButtonUp (0))
+        {
+            //mouseEnd = Input.mousePosition;
+            AddQueue(vecFinal);
+            isAiming = false;
+
+            audioAiming.Stop();
+        }
+>>>>>>> origin/main
 
                 audioAiming.Play();
             } 
@@ -92,6 +112,7 @@ public class ScriptPlayer : MonoBehaviour
             {
                 Aimer.SetActive(true);
 
+<<<<<<< HEAD
                 Vector2 mouseCur = Input.mousePosition;
                 Vector3 vecDif = curCam.ScreenToWorldPoint(mouseBegin)
                     - curCam.ScreenToWorldPoint(mouseCur);
@@ -124,6 +145,39 @@ public class ScriptPlayer : MonoBehaviour
                 // debug
                 //Debug.Log(offsetAngle + ", " + offsetAngleSub);
             }
+=======
+            Vector2 mouseCur = Input.mousePosition;
+            Vector3 vecDif = curCam.ScreenToWorldPoint(mouseBegin)
+                - curCam.ScreenToWorldPoint(mouseCur);
+            float rot = vecDif.x == 0 ? 90 : Mathf.Atan2(vecDif.y, vecDif.x) * I80OverPI;
+            //rot = vecDif.y > 0 ? rot : rot + 180;
+            float limitedMagnitude = Cap01(vecDif.magnitude / curCam.orthographicSize);
+
+            audioAiming.pitch = minAimingSound + limitedMagnitude * aimingSoundMult;
+
+            // shaking effect
+            aimTime += Time.deltaTime;
+            float editedMultiplier = aimTime > aimUnstableTime ? 
+                1.0f : (aimUnstableTime - aimTime) * aimUnstableMultiplier + 1.0f;
+
+            float deltaAngle = Time.deltaTime * vecDif.magnitude * rateConstant;
+            offsetAngle += deltaAngle;
+            offsetAngleSub += deltaAngle * (1.0f + limitedMagnitude * 2.7f);
+
+            rot += angleConstant * (limitedMagnitude + minAimShake) * 
+                (Mathf.Sin(offsetAngle) - Mathf.Sin(offsetAngleSub)) * editedMultiplier;
+
+            vecFinal = new Vector2(Mathf.Cos(rot * PIOver180), Mathf.Sin(rot * PIOver180)) * limitedMagnitude;
+
+            // limit strength
+            Vector3 processedDif = lengthConstant * vecFinal;
+            Aimer.transform.position = processedDif * 0.5f + transform.position;
+            Aimer.transform.rotation = Quaternion.Euler(0f, 0f, rot);
+            Aimer.transform.localScale = new Vector3(processedDif.magnitude, 0.5f, 1f);
+
+            // debug
+            //Debug.Log(offsetAngle + ", " + offsetAngleSub);
+>>>>>>> origin/main
         }
 
         if (timer > 0.0f)
@@ -168,9 +222,13 @@ public class ScriptPlayer : MonoBehaviour
             rig.velocity += jumpVec * strengthConstant;
             timer = 0.0f;
             Aimer.SetActive(false);
+<<<<<<< HEAD
 
             if (rig.velocity.magnitude >= velocityMin)
                 audioShooting.Play();
+=======
+            audioShooting.Play();
+>>>>>>> origin/main
         }
         onGround = false;
     }

@@ -113,6 +113,7 @@ public class SlapScr : MonoBehaviour
 
 
 
+<<<<<<< HEAD
 //[CustomEditor(typeof(SlapScr))]
 //public class SlapScrEditor : Editor
 //{
@@ -126,3 +127,18 @@ public class SlapScr : MonoBehaviour
 //        Handles.DrawWireDisc(slapper.transform.position + pos, Vector3.forward, 0.5f);
 //    }
 //}
+=======
+[CustomEditor(typeof(SlapScr))]
+public class SlapScrEditor : Editor
+{
+    private SlapScr slapper;
+
+    public void OnSceneGUI()
+    {
+        slapper = this.target as SlapScr;
+        Handles.color = Color.green;
+        Vector3 pos = slapper.aim;
+        Handles.DrawWireDisc(slapper.transform.position + pos, Vector3.forward, 0.5f);
+    }
+}
+>>>>>>> origin/main

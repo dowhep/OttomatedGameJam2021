@@ -12,12 +12,16 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+<<<<<<< HEAD
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+=======
+        Instance = this;
+>>>>>>> origin/main
     }
 
     public static Sound GetSound(string name)

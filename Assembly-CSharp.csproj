@@ -68,7 +68,10 @@
     <Compile Include="Assets\Scripts\VolumeControlScr.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Sound.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\VictoryScr.cs" />
+=======
+>>>>>>> origin/main
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

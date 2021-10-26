@@ -38,6 +38,7 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+<<<<<<< HEAD
 --- !u!244 &-4066868638504452773
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -56,6 +57,8 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+=======
+>>>>>>> origin/main
 --- !u!244 &-1092744313972718677
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -88,8 +91,11 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: d4fc8f0f5af33774b98821784a0810a2
     name: MasterVolume
+<<<<<<< HEAD
   - guid: db43c664ef33a9e4396fda79fe38a5b4
     name: LowpassFreq
+=======
+>>>>>>> origin/main
   - guid: 25a25699c0f8f1c429dee14b6c282407
     name: MusicVolume
   - guid: 6630eedaf51a072438a887dba2de061b
@@ -119,7 +125,10 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 24400004}
+<<<<<<< HEAD
   - {fileID: -4066868638504452773}
+=======
+>>>>>>> origin/main
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -147,10 +156,14 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 9de98ab6a5afd3e4ea862d35b631b1a9
+<<<<<<< HEAD
   m_FloatValues:
     db43c664ef33a9e4396fda79fe38a5b4: 22000
     1791e4f50212b624096e8dad9efc8dac: 1.5
     afa1c4b860be2594bbb21f0ba81fe107: 22000
+=======
+  m_FloatValues: {}
+>>>>>>> origin/main
   m_TransitionOverrides: {}
 --- !u!244 &8349402662983018655
 AudioMixerEffectController:

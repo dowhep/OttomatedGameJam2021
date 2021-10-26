@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections;
 using UnityEngine;
@@ -17,11 +18,21 @@ public class UIScr : MonoBehaviour
     public GameObject GOVictory;
     public AudioMixer mixer;
     public float lowpassCutoff = 600f;
+=======
+using UnityEngine;
+
+public class UIScr : MonoBehaviour
+{
+    private bool isUIOpen = false;
+    #region Public Fields
+    public GameObject GOOptions;
+>>>>>>> origin/main
     #endregion
 
     #region Unity Methods
     private void Start()
     {
+<<<<<<< HEAD
         if (Instance == null)
             Instance = this;
         else
@@ -35,10 +46,17 @@ public class UIScr : MonoBehaviour
     void Update()
     {
         if (victoryed) return;
+=======
+        GOOptions.SetActive(isUIOpen);
+    }
+    void Update()
+    {
+>>>>>>> origin/main
         if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
         {
             isUIOpen = !isUIOpen;
             GOOptions.SetActive(isUIOpen);
+<<<<<<< HEAD
             if (isUIOpen)
             {
                 mixer.SetFloat("LowpassFreq", lowpassCutoff);
@@ -80,6 +98,13 @@ public class UIScr : MonoBehaviour
         }
     }
 
+=======
+        }
+    }
+ 
+    #endregion
+ 
+>>>>>>> origin/main
     #region Private Methods
     #endregion
 }

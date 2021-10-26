@@ -1218,6 +1218,7 @@ System memory in use after: 277.5 MB.
 Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3995.
 Total: 7.752500 ms (FindLiveObjects: 0.828500 ms CreateObjectMapping: 0.506800 ms MarkObjects: 6.190100 ms  DeleteObjects: 0.224800 ms)
 
+<<<<<<< HEAD
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
@@ -2062,3 +2063,5 @@ Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4130.
 Total: 4.467600 ms (FindLiveObjects: 0.384700 ms CreateObjectMapping: 0.155300 ms MarkObjects: 3.521800 ms  DeleteObjects: 0.404400 ms)
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+=======
+>>>>>>> origin/main
