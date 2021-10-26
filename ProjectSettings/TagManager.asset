@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Victory
   layers:
   - Default
   - TransparentFX
@@ -38,6 +39,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackBackground
+    uniqueID: 3
+    locked: 0
+  - name: Background
+    uniqueID: 2
+    locked: 0
   - name: Default
+    uniqueID: 1
+    locked: 0
+  - name: Foreground
     uniqueID: 0
     locked: 0
